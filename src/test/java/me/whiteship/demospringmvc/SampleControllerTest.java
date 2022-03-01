@@ -18,10 +18,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class SampleControllerTest {
     @Autowired
     MockMvc mockMvc;
+    @Autowired
+    PersonRepository personRepository;
 
     @Test
     public void hello() throws Exception {
-        this.mockMvc.perform(get("/hello/heeseong"))
+        Person person = new Person();
+        person.setName("heeseong");
+        Person savePerson = personRepository.save(person);
+
+        this.mockMvc.perform(get("/hello/" + savePerson.getId()))
                 .andDo(print())
                 .andExpect(content().string("hello heeseong"));
     }
