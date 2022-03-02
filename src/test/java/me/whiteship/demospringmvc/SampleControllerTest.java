@@ -27,7 +27,8 @@ public class SampleControllerTest {
         person.setName("heeseong");
         Person savePerson = personRepository.save(person);
 
-        this.mockMvc.perform(get("/hello/" + savePerson.getId()))
+        this.mockMvc.perform(get("/hello")
+                        .param("id", savePerson.getId().toString()))
                 .andDo(print())
                 .andExpect(content().string("hello heeseong"));
     }
